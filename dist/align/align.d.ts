@@ -8,4 +8,7 @@ export declare class Align {
     alternate: Record<AlignLineType, AlignLineData[]>;
     constructor(store: Store);
     render(): void;
+    mount(): void;
+    unmount(): void;
+    hidden(): void;
 }

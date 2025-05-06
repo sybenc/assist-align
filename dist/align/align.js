@@ -26,11 +26,21 @@ export class Align {
             this.g.node().append(line);
             this.lines[type] = line;
         });
-        store.assist.node().append(this.g.node());
     }
     render() {
         align_alternate.call(this);
         align_absorb.call(this);
         align_draw.call(this);
+    }
+    mount() {
+        this.store.assist.node().append(this.g.node());
+    }
+    unmount() {
+        this.g.remove();
+    }
+    hidden() {
+        Object.values(this.lines).forEach(line => {
+            line.style('display', 'none');
+        });
     }
 }
