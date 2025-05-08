@@ -1,39 +1,28 @@
-import d3 from "../d3";
 import { alignTypes } from "./const";
-import { align_alternate } from "./align_alternate";
+import { align_compute } from "./align_compute";
 import { align_absorb } from "./align_absorb";
 import { align_draw } from "./align_draw";
 export class Align {
     store;
     g;
     lines;
-    alternate = {
-        ht: [],
-        hc: [],
-        hb: [],
-        vl: [],
-        vc: [],
-        vr: [],
-    };
+    alternate = [];
     constructor(store) {
         this.store = store;
-        this.g = d3.create("g").attr("data-assist-type", "align");
+        this.g = store.assist.append("g").attr("data-assist-type", "align").style("display", "block");
         this.lines = {};
         [...alignTypes, "vertical"].forEach((type) => {
-            const line = d3.create("line")
-                .attr("stroke", "red")
-                .style("display", "none");
-            this.g.node().append(line);
-            this.lines[type] = line;
+            this.lines[type] = this.g.append("line").style("display", "none");
         });
     }
     render() {
-        align_alternate.call(this);
+        this.hidden();
+        align_compute.call(this);
         align_absorb.call(this);
         align_draw.call(this);
     }
     mount() {
-        this.store.assist.node().append(this.g.node());
+        this.store.assist.node().appendChild(this.g.node());
     }
     unmount() {
         this.g.remove();

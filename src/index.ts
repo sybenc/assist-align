@@ -12,7 +12,11 @@ export const assistAlign: PluginCreator<AssistAlign> = (store) => {
     install() {
       store.onMountEnd(() => align.mount())
       store.onMoveRectStart(() => align.render())
-      store.onMoveRect(() => align.render())
+      store.onMoveRect(({dx, dy}) => {
+        if (dx < 5 && dy < 5) {
+          align.render()
+        }
+      })
       store.onMoveRectEnd(() => align.hidden())
     },
     uninstall() {

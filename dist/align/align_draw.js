@@ -5,12 +5,9 @@ export function align_draw() {
     if (!selected.parent)
         return;
     const container = selected.parent;
-    const alternate = Object.values(this.alternate).flat();
-    alternate.forEach(item => {
+    this.alternate.forEach(item => {
         const { start, end, type } = item;
         const line = this.lines[type];
-        line.attr('stroke-width', 1 / store.transform.scale)
-            .style('display', 'block');
         if (/^h/.test(type)) {
             line.attr('x1', start)
                 .attr('x2', end);
@@ -41,5 +38,8 @@ export function align_draw() {
                     break;
             }
         }
+        line.attr('stroke-width', 1 / store.transform.scale)
+            .attr('stroke', 'red')
+            .style('display', 'block');
     });
 }

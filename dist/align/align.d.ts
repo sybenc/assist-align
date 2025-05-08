@@ -5,7 +5,7 @@ export declare class Align {
     store: Store;
     g: DomSelection;
     lines: Record<AlignLineType | "vertical", DomSelection>;
-    alternate: Record<AlignLineType, AlignLineData[]>;
+    alternate: AlignLineData[];
     constructor(store: Store);
     render(): void;
     mount(): void;
